@@ -94,9 +94,10 @@ define python::virtualenv (
       /.*/ => getvar('virtualenv_version'),
       default => '',
     }
-    if (( versioncmp($_virtualenv_version,'1.7') > 0 ) and ( $systempkgs == true )) {
+    
+    if $_virtualenv_version != '' and versioncmp($_virtualenv_version, '1.7') > 0 and $systempkgs == true {
       $system_pkgs_flag = '--system-site-packages'
-    } elsif (( versioncmp($_virtualenv_version,'20.0.1') < 0 ) and ( $systempkgs == false )) {
+    } elsif $_virtualenv_version != '' and versioncmp($_virtualenv_version, '20.0.1') < 0 and $systempkgs == false {
       $system_pkgs_flag = '--no-site-packages'
     } else {
       $system_pkgs_flag = $systempkgs ? {
